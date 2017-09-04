@@ -8,8 +8,8 @@ extension Droplet {
             return json
         }
 
-        get("plaintext") { req in
-            return "Hello, world!"
+        get("hi") { req in
+            return "Hello, world!\n"
         }
 
         // response to requests to /info domain
@@ -18,7 +18,23 @@ extension Droplet {
             return req.description
         }
 
-        get("description") { req in return req.description }
+        get("description") { req in
+            return req.description
+        }
+        
+        get("name", ":x") { req in
+            if let name = req.parameters["x"]?.string {
+                return "Hello \(name)\n"
+            }
+            return "Error retrieving parameters"
+        }
+        
+        get("greet") { req in
+            if let value = req.data["name"]?.string {
+                return "Hello \(value)\n"
+            }
+            return "Error retrieving parameters"
+        }
         
         try resource("posts", PostController.self)
     }
