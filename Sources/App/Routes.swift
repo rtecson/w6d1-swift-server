@@ -6,7 +6,7 @@ extension Droplet {
             return "Hello, world!\n"
         }
 
-        // Respond to curl localhost:8080/hi
+        // Respond to curl localhost:8080/hello
         // with "Hello, world!\n"
         get("hello") { req in
             var json = JSON()
@@ -28,7 +28,7 @@ extension Droplet {
 
         // Respond to curl localhost:8080/name/Bob
         get("name", ":x") { req in
-            guard let name = req.parameters["x"]?.string let {
+            guard let name = req.parameters["x"]?.string else {
                 return "Error retrieving parameters\n"
             }
             return "Hello \(name)\n"
